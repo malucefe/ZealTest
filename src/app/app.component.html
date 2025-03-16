@@ -1,0 +1,99 @@
+<div class="container">
+  <header class="animate-slide-down">
+    <h1>Bienvenidos</h1>
+    <nav>
+      <a href="#about">Nosotros</a>
+      <a href="#services">Servicios</a>
+      <a href="#projects">Proyectos</a>
+      <a href="#contact">Contacto</a>
+    </nav>
+  </header>
+  
+  <main>
+    <section id="about" class="card animate-fade-in">
+      <h2>Sobre Nosotros</h2>
+      <p>Nos dedicamos a crear soluciones hermosas y sostenibles.</p>
+    </section>
+
+    <section id="services" class="card animate-fade-in">
+      <h2>Nuestros Servicios</h2>
+      <div class="services-grid">
+        <div class="service-item animate-fade-in">
+          <span class="icon">🌱</span>
+          <h3>Crecimiento</h3>
+          <p>Desarrollo sostenible</p>
+        </div>
+        <div class="service-item animate-fade-in" style="animation-delay: 0.2s">
+          <span class="icon">💡</span>
+          <h3>Innovación</h3>
+          <p>Soluciones creativas</p>
+        </div>
+        <div class="service-item animate-fade-in" style="animation-delay: 0.4s">
+          <span class="icon">🤝</span>
+          <h3>Colaboración</h3>
+          <p>Trabajando juntos</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="card animate-fade-in">
+      <h2>Proyectos Destacados</h2>
+      <div class="project-showcase">
+        <button class="nav-button prev" (click)="prevProject()">❮</button>
+        <div class="project-card">
+          <span class="project-icon">{{projects[currentProjectIndex].icon}}</span>
+          <h3>{{projects[currentProjectIndex].title}}</h3>
+          <p class="project-description">{{projects[currentProjectIndex].description}}</p>
+          <p class="project-details">{{projects[currentProjectIndex].details}}</p>
+        </div>
+        <button class="nav-button next" (click)="nextProject()">❯</button>
+      </div>
+    </section>
+
+    <section id="contact" class="card animate-fade-in">
+      <h2>Contáctanos</h2>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <div class="form-group">
+          <input type="text" formControlName="name" placeholder="Nombre" 
+                 [class.invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+          <div class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+            Por favor ingrese un nombre válido
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="email" formControlName="email" placeholder="Correo electrónico"
+                 [class.invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+          <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+            Por favor ingrese un correo electrónico válido
+          </div>
+        </div>
+
+        <div class="form-group">
+          <textarea formControlName="message" placeholder="Mensaje"
+                    [class.invalid]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"></textarea>
+          <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+            Por favor ingrese un mensaje de al menos 10 caracteres
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="contactForm.invalid">Enviar Mensaje</button>
+        <div class="success-message" *ngIf="showThanks">
+          ¡Gracias por tu mensaje! Te contactaremos pronto.
+        </div>
+      </form>
+    </section>
+
+    <section class="newsletter-section card animate-fade-in">
+      <h2>Suscríbete a Nuestro Boletín</h2>
+      <div class="newsletter-form">
+        <input type="email" [(ngModel)]="newsletterEmail" placeholder="Tu correo electrónico">
+        <button (click)="subscribeNewsletter()">Suscribirse</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>2025 💚</p>
+  </footer>
+</div>
