@@ -1,6 +1,6 @@
 <div class="container">
   <header class="animate-slide-down">
-    <h1>Bienvenidos</h1>
+    <h1>Zeal</h1>
     <nav>
       <a href="#about">Nosotros</a>
       <a href="#services">Servicios</a>
@@ -50,6 +50,73 @@
       </div>
     </section>
 
+    <section id="team" class="card animate-fade-in">
+      <h2>Nuestro Equipo</h2>
+      
+      <!-- Carrusel dinámico -->
+      <div class="team-carousel">
+        <button class="carousel-nav-button prev" (click)="prevTeamMember()">
+          <span class="nav-icon">❮</span>
+        </button>
+        <div class="team-member-wrapper">
+          <div class="team-member" [@slideAnimation]="currentTeamIndex">
+            <div class="member-image-container">
+              <div class="member-icon">
+                <img [src]="'/assets/team/' + team[currentTeamIndex].image.split('/').pop()" [alt]="team[currentTeamIndex].name">
+              </div>
+              <div class="member-badge">
+                <span class="member-role">{{team[currentTeamIndex].role}}</span>
+              </div>
+            </div>
+            <div class="member-info">
+              <h3>{{team[currentTeamIndex].name}}</h3>
+              <h4>{{team[currentTeamIndex].role}}</h4>
+              <p>{{team[currentTeamIndex].description}}</p>
+              <div class="member-social">
+                <a [href]="team[currentTeamIndex].social.linkedin" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+                <a [href]="team[currentTeamIndex].social.github" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-nav-button next" (click)="nextTeamMember()">
+          <span class="nav-icon">❯</span>
+        </button>
+      </div>
+
+      <!-- Indicadores de posición -->
+      <div class="carousel-indicators">
+        <button *ngFor="let member of team; let i = index" 
+                [class.active]="i === currentTeamIndex"
+                (click)="currentTeamIndex = i"
+                class="indicator-dot">
+        </button>
+      </div>
+
+      <!-- Vista horizontal de equipo -->
+      <div class="team-static-carousel">
+        <div class="team-members-row">
+          <div class="static-team-member" 
+               *ngFor="let member of team; let i = index"
+               [class.active]="i === currentTeamIndex"
+               (click)="currentTeamIndex = i">
+            <div class="static-member-icon">
+              <img [src]="'/assets/team/' + member.image.split('/').pop()" [alt]="member.name">
+            </div>
+            <div class="static-member-info">
+              <h3>{{member.name}}</h3>
+              <h4>{{member.role}}</h4>
+              <p>{{member.description}}</p>
+              <div class="member-social">
+                <a [href]="member.social.linkedin" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+                <a [href]="member.social.github" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="card animate-fade-in">
       <h2>Contáctanos</h2>
       <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
@@ -84,13 +151,7 @@
       </form>
     </section>
 
-    <section class="newsletter-section card animate-fade-in">
-      <h2>Suscríbete a Nuestro Boletín</h2>
-      <div class="newsletter-form">
-        <input type="email" [(ngModel)]="newsletterEmail" placeholder="Tu correo electrónico">
-        <button (click)="subscribeNewsletter()">Suscribirse</button>
-      </div>
-    </section>
+    
   </main>
 
   <footer>

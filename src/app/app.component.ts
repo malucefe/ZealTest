@@ -2,19 +2,37 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('slideAnimation', [
+      state('*', style({
+        transform: 'translateX(0)',
+        opacity: 1
+      })),
+      transition(':increment', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('300ms ease-out')
+      ]),
+      transition(':decrement', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('300ms ease-out')
+      ])
+    ])
+  ]
 })
 export class AppComponent {
   contactForm: FormGroup;
   newsletterEmail: string = '';
   showThanks: boolean = false;
   currentProjectIndex: number = 0;
+  currentTeamIndex: number = 0;
 
   projects = [
     {
@@ -37,6 +55,49 @@ export class AppComponent {
     }
   ];
 
+  team = [
+    {
+      name: 'Juan Gil',
+      role: 'Backend Developer',
+      description: 'Experto en desarrollo sostenible y arquitectura de software',
+      image: 'assets/team/juan-gil.jpg',
+      social: {
+        linkedin: 'https://linkedin.com/in/juan-gil',
+        github: 'https://github.com/Juangil56'
+      }
+    },
+    {
+      name: 'Issa Cooper',
+      role: 'Frontend Developer',
+      description: 'Diseñadora creativa enfocada en interfaces sostenibles',
+      image: 'issa-cooper.jpg',
+      social: {
+        linkedin: 'https://www.linkedin.com/in/issa-cooper-moretti-b9a3b5324/',
+        github: 'https://github.com/ISSACOOPER'
+      }
+    },
+    {
+      name: 'John Montoya',
+      role: 'Backend Developer',
+      description: 'Experto en optimización y seguridad de sistemas',
+      image: 'assets/team/john-montoya.jpg',
+      social: {
+        linkedin: 'https://linkedin.com/in/john-montoya',
+        github: 'https://github.com/JohnMUCA'
+      }
+    },
+    {
+      name: 'Luis Martinez',
+      role: 'Frontend Developer',
+      description: 'Especialista en crear experiencias de usuario excepcionales',
+      image: 'assets/team/luis-martinez.jpg',
+      social: {
+        linkedin: 'https://www.linkedin.com/in/luis-martínez-3a9881343/',
+        github: 'https://github.com/malucefe'
+      }
+    }
+  ];
+
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -51,6 +112,14 @@ export class AppComponent {
 
   prevProject() {
     this.currentProjectIndex = (this.currentProjectIndex - 1 + this.projects.length) % this.projects.length;
+  }
+
+  nextTeamMember() {
+    this.currentTeamIndex = (this.currentTeamIndex + 1) % this.team.length;
+  }
+
+  prevTeamMember() {
+    this.currentTeamIndex = (this.currentTeamIndex - 1 + this.team.length) % this.team.length;
   }
 
   onSubmit() {
