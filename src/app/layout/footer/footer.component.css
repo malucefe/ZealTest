@@ -1,0 +1,8 @@
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: #2e7d32;
+    font-size: 0.9em;
+    animation: fadeIn 1s ease-out;
+  }
